@@ -59,7 +59,7 @@ public class HelloSocket {
     public void onMessage(String message, Session session) throws IOException {
         for (HelloSocket i : helloSockets) {
             if (session.getId().equals(i.session.getId()))
-            i.sendMessage("反弹数据：" + message);
+                i.sendMessage("反弹数据：" + message);
         }
     }
 

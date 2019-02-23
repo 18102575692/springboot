@@ -1,5 +1,6 @@
 package com.example.demo1.controller;
 
+import com.example.demo1.entity.User;
 import com.example.demo1.service.UserService;
 import com.example.demo1.tools.ResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class UserController {
     //添加用户
     @RequestMapping("/add")
     public ResultDto addUSer() {
-        System.out.println("测试输出");
+
         return ResultDto.ok("1");
     }
 

@@ -9,9 +9,8 @@ import java.io.Serializable;
 @Entity
 public class User implements Serializable {
     @Id
-    @Column(name = "user_id",columnDefinition = "int(32) COMMENT '用户ID'")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID'")
+    private Long id;
     @Column(nullable = false)
     private String name;
     @Column(name = "password",columnDefinition = "varchar(255) COMMENT '密码'",nullable = false)
@@ -25,11 +24,11 @@ public class User implements Serializable {
     @Column(name = "updated_time",columnDefinition = "int(10) COMMENT '更新时间'")
     private Integer updateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

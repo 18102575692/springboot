@@ -10,7 +10,7 @@ import java.util.Date;
  * 时间类型
  */
 public class TimeUtil {
-    public static String dateToString(Date date){
+    public static String dateToString(Date date) {
         String dateStr = "";
         //format的格式可以任意
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -22,7 +22,7 @@ public class TimeUtil {
         return dateStr;
     }
 
-    public static String dateToStrNoDay(Date date){
+    public static String dateToStrNoDay(Date date) {
         String dateStr = "";
         //format的格式可以任意
         DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -34,7 +34,7 @@ public class TimeUtil {
         return dateStr;
     }
 
-    public static String dateToStrNoTime(Date date){
+    public static String dateToStrNoTime(Date date) {
         String dateStr = "";
         //format的格式可以任意
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +45,8 @@ public class TimeUtil {
         }
         return dateStr;
     }
-    public static String dateToStrNoTimeDian(Date date){
+
+    public static String dateToStrNoTimeDian(Date date) {
         String dateStr = "";
         DateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         try {
@@ -56,7 +57,7 @@ public class TimeUtil {
         return dateStr;
     }
 
-    public static Date stringToDate(String dateStr){
+    public static Date stringToDate(String dateStr) {
         Date date = new Date();
         //注意format的格式要与日期String的格式相匹配
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -69,7 +70,7 @@ public class TimeUtil {
         return date;
     }
 
-    public static Date strToDateNoTime(String dateStr){
+    public static Date strToDateNoTime(String dateStr) {
         Date date = null;
         //注意format的格式要与日期String的格式相匹配
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -82,7 +83,7 @@ public class TimeUtil {
         return date;
     }
 
-    public static Date timestampToDate(Timestamp ts){
+    public static Date timestampToDate(Timestamp ts) {
         Date date = new Date();
         try {
             date = ts;
@@ -93,7 +94,7 @@ public class TimeUtil {
         return date;
     }
 
-    public static String timestampToString(Timestamp ts){
+    public static String timestampToString(Timestamp ts) {
         String tsStr = "";
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -107,7 +108,7 @@ public class TimeUtil {
         return tsStr;
     }
 
-    public static Timestamp stringToTimestamp(String tsStr){
+    public static Timestamp stringToTimestamp(String tsStr) {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         try {
             ts = Timestamp.valueOf(tsStr);
@@ -118,7 +119,7 @@ public class TimeUtil {
         return ts;
     }
 
-    public static Date longToDateNoTime(String dateStr){
+    public static Date longToDateNoTime(String dateStr) {
         Date date = new Date(Long.parseLong(dateStr));
         //注意format的格式要与日期String的格式相匹配
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,7 +132,7 @@ public class TimeUtil {
         return date;
     }
 
-    public static Date longToDate(String dateStr){
+    public static Date longToDate(String dateStr) {
         Date date = new Date(Long.parseLong(dateStr));
         //注意format的格式要与日期String的格式相匹配
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -143,7 +144,8 @@ public class TimeUtil {
         }
         return date;
     }
-    public static Date longToDate1(Long dateStr){
+
+    public static Date longToDate1(Long dateStr) {
         Date date = new Date(dateStr);
         //注意format的格式要与日期String的格式相匹配
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -169,15 +171,21 @@ public class TimeUtil {
         res = String.valueOf(ts);
         return res;
     }
+
     /*
      * 将时间戳转换为时间
      */
-    public static String stampToDate(String s){
+    public static String stampToDate(String s) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         long lt = new Long(s);
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
         return res;
+    }
+
+    //获取当前时间
+    public static Integer getTime() {
+        return Integer.valueOf(System.currentTimeMillis() / 1000 + "");
     }
 }

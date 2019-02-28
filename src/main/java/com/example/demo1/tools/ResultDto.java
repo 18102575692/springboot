@@ -36,6 +36,9 @@ public class ResultDto {
     public static ResultDto ok() {
         return new ResultDto(null);
     }
+    public static ResultDto error(String data) {
+        return new ResultDto(200,"error",data);
+    }
 
 
     public Integer getStatus() {

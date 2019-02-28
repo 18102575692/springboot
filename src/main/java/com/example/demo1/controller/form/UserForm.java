@@ -1,19 +1,22 @@
 package com.example.demo1.controller.form;
 
+import com.example.demo1.controller.group.UserCreate;
+import com.example.demo1.controller.group.UserModify;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 //j接收前端表单数据
 public class UserForm {
-    @NotNull(message = "用户ID不能为空")
+    @NotNull(message = "用户ID不能为空", groups = {UserModify.class})
     private Integer id;
-    @Size(max = 50,message = "用户名不允许超出500个字")
-    @NotBlank(message = "用户名不不允许为空")
+    @Size(max = 50, message = "用户名不允许超出500个字", groups = {UserCreate.class, UserModify.class})
+    @NotBlank(message = "用户名不不允许为空", groups = {UserCreate.class, UserModify.class})
     private String name;
-    @NotBlank(message = "用户密码不允许为空")
+    @NotBlank(message = "用户密码不允许为空", groups = {UserCreate.class, UserModify.class})
     private String password;
-    @NotBlank(message = "手机号码不允许为空")
+    @NotBlank(message = "手机号码不允许为空", groups = {UserCreate.class, UserModify.class})
     private String phone;
 
     public Integer getId() {

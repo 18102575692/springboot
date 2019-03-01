@@ -23,4 +23,11 @@ public class UserService {
         }
         return 0;
     }
+    public User getUser(String id){
+        if (this.userDao.getUser(id).isPresent()){
+            return this.userDao.getUser(id).get();
+        }else {
+            return null;
+        }
+    }
 }

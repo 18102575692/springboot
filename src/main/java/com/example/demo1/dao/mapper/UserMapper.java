@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * 用户基本信息
  */
 
-public interface UserMapper extends CrudRepository<User,Integer>, JpaRepository<User,Integer> {
+public interface UserMapper extends CrudRepository<User,String>, JpaRepository<User,String> {
 
 }

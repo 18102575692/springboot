@@ -15,7 +15,7 @@ public class Generate {
         return id.replace("-", "");
     }
 
-    public synchronized static Long getId() {
+    public synchronized static String getId() {
         Long index = null;
         // 从0到999 curIndex*100 curIndex 100-99900
         index = (curIndex = curIndex + 1L) % 1000L;
@@ -25,6 +25,6 @@ public class Generate {
         // 随机数 1-10
         randomNumber = (long) new Random().nextInt(100);
         return (new Date()).getTime() * 100000L + index * 100L
-                + randomNumber;
+                + randomNumber+"";
     }
 }

@@ -10,6 +10,8 @@ import com.example.demo1.tools.ResultDto;
 import com.example.demo1.tools.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +41,15 @@ public class UserController {
         } else {
             return ResultDto.error("创建失败");
         }
-
+    }
+    @GetMapping("/{id}")
+    public ResultDto getUser(@PathVariable("id")String id){
+        User user = this.userService.getUser(id);
+        if (user != null){
+            return ResultDto.ok(user);
+        }else {
+            return ResultDto.error("没找到用户.");
+        }
     }
 
 }

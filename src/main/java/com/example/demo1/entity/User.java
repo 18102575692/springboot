@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID'")
-    private Long id;
+    private String id;
     @Column(nullable = false)
     private String name;
     @Column(name = "password",columnDefinition = "varchar(255) COMMENT '密码'",nullable = false)
@@ -24,11 +24,11 @@ public class User implements Serializable {
     @Column(name = "updated_time",columnDefinition = "int(10) COMMENT '更新时间'")
     private Integer updateTime;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,7 +83,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +

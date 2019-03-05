@@ -2,14 +2,14 @@ package com.example.demo1.dao.dao;
 
 import com.example.demo1.dao.mapper.UserMapper;
 import com.example.demo1.entity.User;
-import com.example.demo1.tools.BeanUtil;
+import com.example.demo1.tools.Pager;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class UserDao {
@@ -21,8 +21,8 @@ public class UserDao {
      * @param user 用户信息
      * @return 返回的 保存数据
      */
-    public User create(User user){
-        return this.userMapper.save(user);
+    public int create(User user){
+        return this.userMapper.insert(user);
     }
 
     /**
@@ -30,19 +30,26 @@ public class UserDao {
      * @param id 用户ID
      * @return 用户信息
      */
-    public Optional<User> getUser(String id){
-        return this.userMapper.findById(id);
+    public User getUser(String id){
+        return this.userMapper.selectByPrimaryKey(id);
     }
 
     /**
      * 获取用户列表
-      * @param map  条件
+      * @param user  条件
+     * @param pager 分页相关
      * @return 用户列表
      */
-    public List<User> getUserList(Map<String,Object> map){
-//        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher()
-        User user = BeanUtil.map2Object(map,User.class);
-        Example<User> example  = Example.of(user);
-        return this.userMapper.findAll(example);
+    public List<User> getUserList(User user, Pager pager){
+        Example example = new Example(User.class);
+        if (!StringUtils.isEmpty(user.getName())){
+            example.createCriteria().andLike("name",user.getName());
+        }
+        if (!StringUtils.isEmpty(user.getPhone())){
+            example.createCriteria().andLike("phone",user.getPhone());
+        }
+        example.orderBy("created_time").desc();
+        RowBounds rowBounds=new RowBounds(pager.getCurrentPage(),pager.getPageSize());
+        return this.userMapper.selectByExampleAndRowBounds(example,rowBounds);
     }
 }

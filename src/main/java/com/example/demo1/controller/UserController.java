@@ -42,12 +42,15 @@ public class UserController {
             return ResultDto.error("创建失败");
         }
     }
+
     @GetMapping("/{id}")
-    public ResultDto getUser(@PathVariable("id")String id){
+    public ResultDto getUser(@PathVariable("id") String id) {
         User user = this.userService.getUser(id);
-        if (user != null){
-            return ResultDto.ok(user);
-        }else {
+        Map<String, Object> map = BeanUtil.object2Map(user);
+        map.remove("password");
+        if (user != null) {
+            return ResultDto.ok(map);
+        } else {
             return ResultDto.error("没找到用户.");
         }
     }

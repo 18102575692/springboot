@@ -52,4 +52,24 @@ public class UserDao {
         RowBounds rowBounds=new RowBounds(pager.getCurrentPage(),pager.getPageSize());
         return this.userMapper.selectByExampleAndRowBounds(example,rowBounds);
     }
+    public int getUserListToCount(User user, Pager pager){
+        Example example = new Example(User.class);
+        if (!StringUtils.isEmpty(user.getName())){
+            example.createCriteria().andLike("name",user.getName());
+        }
+        if (!StringUtils.isEmpty(user.getPhone())){
+            example.createCriteria().andLike("phone",user.getPhone());
+        }
+        return this.userMapper.selectCountByExample(example);
+    }
+
+
+    /**
+     * 更新用户
+     * @param user 用户
+     * @return 影响行数
+     */
+    public int updateUser(User user){
+        return this.userMapper.updateByPrimaryKeySelective(user);
+    }
 }

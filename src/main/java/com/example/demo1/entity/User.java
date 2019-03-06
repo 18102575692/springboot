@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 public class User implements Serializable {
     @Id
-    @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID'")
+    @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID' primary key")
     private String id;
     @Column(nullable = false)
     private String name;

@@ -48,11 +48,11 @@ public class UserDao {
         if (!StringUtils.isEmpty(user.getPhone())){
             example.createCriteria().andLike("phone",user.getPhone());
         }
-        example.orderBy("created_time").desc();
+        example.orderBy("createTime").desc();
         RowBounds rowBounds=new RowBounds(pager.getCurrentPage(),pager.getPageSize());
         return this.userMapper.selectByExampleAndRowBounds(example,rowBounds);
     }
-    public int getUserListToCount(User user, Pager pager){
+    public int getUserListToCount(User user){
         Example example = new Example(User.class);
         if (!StringUtils.isEmpty(user.getName())){
             example.createCriteria().andLike("name",user.getName());
@@ -71,5 +71,14 @@ public class UserDao {
      */
     public int updateUser(User user){
         return this.userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    /**
+     * 删除用户
+     * @param id 用户ID
+     * @return 影响行数
+     */
+    public int delete(String  id){
+        return this.userMapper.deleteByPrimaryKey(id);
     }
 }

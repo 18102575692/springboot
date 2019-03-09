@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
@@ -77,5 +78,14 @@ public class UserController {
         pager.setDataList(this.userService.getUSerList(user,pager));
         return ResultDto.ok(pager);
 
+    }
+    //二维码
+    @GetMapping("/test")
+    public String test(HttpServletResponse servletResponse){
+        QrCode qrCode=new QrCode();
+        String Name="测试包";
+        String[] file = {"http://127.0.0.1:8080/img/mc_index.jpg","http://127.0.0.1:8080/img/mc_index.jpg"};
+                qrCode.download(servletResponse,Name,file);
+        return "ok";
     }
 }

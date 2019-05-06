@@ -7,9 +7,11 @@ import java.io.Serializable;
  * 基本用户信息
  */
 @Entity
+@Table(name = "user")
 public class User implements Serializable {
+    private static final long serialVersionUID = 1894106929463903011L;
     @Id
-    @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID' primary key")
+    @Column(name = "user_id",columnDefinition = "varchar(18) COMMENT '用户ID'")
     private String id;
     @Column(nullable = false)
     private String name;

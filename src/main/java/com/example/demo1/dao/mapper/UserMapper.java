@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
  * 用户基本信息
  */
 @Repository
+@org.apache.ibatis.annotations.Mapper
 public interface UserMapper extends Mapper<User> {
 
 }

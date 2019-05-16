@@ -3,10 +3,7 @@ package com.example.demo1.entity;
 import com.alibaba.fastjson.JSONArray;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -19,7 +16,7 @@ import java.io.Serializable;
 public class Dish implements Serializable {
     private static final long serialVersionUID = -8553205799504170641L;
     @Id
-    @Column(name = "dish_id",columnDefinition = "varchar(18) comment '菜ID'")
+    @Column(name = "dish_id",columnDefinition = "varchar(6) comment '菜ID'")
     String dish_id;
     @Column(name = "dish_name",columnDefinition = "varchar(80) comment '菜名称'",nullable = false)
     String dish_name;
@@ -37,6 +34,4 @@ public class Dish implements Serializable {
     String dish_difficulty;
     @Column(name = "dish_describe",columnDefinition = "text comment '描述'")
     String dish_describe;
-    @Column(name = "dish_url",columnDefinition = "varchar(100) comment '信息来源'")
-    String dish_url;
 }

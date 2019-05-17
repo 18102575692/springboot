@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.Set;
  * 获取排行一周热门的菜单
  * @author xiesj
  */
+@Component
 public class JsoupTools extends Thread {
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -60,7 +62,7 @@ public class JsoupTools extends Thread {
                         main_material.put("name",weight);
                         jsonArray.add(main_material);
                     }
-                    dish.setMain_material(jsonArray);
+                    dish.setMain_material(jsonArray.toString());
                 }
                 if (material.equals("辅料")){
                     Elements main = element.getElementsByClass("recipeCategory_sub_R clear").get(0).getElementsByTag("li");
@@ -73,7 +75,7 @@ public class JsoupTools extends Thread {
                         other_material.put("name",weight);
                         jsonArray.add(other_material);
                     }
-                    dish.setOther_materials(jsonArray);
+                    dish.setOther_materials(jsonArray.toString());
                 }
             }
             Elements other_information = dish_details.getElementsByClass("recipeCategory_sub_R mt30 clear").get(0).getElementsByTag("li");
@@ -106,7 +108,7 @@ public class JsoupTools extends Thread {
                 jsonObject.put("url",element.getElementsByTag("img").get(0).attr("src"));
                 stepElement.add(jsonObject);
             }
-            dish.setDish_describe(stepElement);
+            dish.setDish_describe(stepElement.toString());
 
             sleep(5000);
             System.out.println(dish.toString());

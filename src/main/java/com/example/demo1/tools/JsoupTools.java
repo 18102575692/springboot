@@ -4,10 +4,13 @@ package com.example.demo1.tools;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo1.entity.Dish;
+import com.example.demo1.service.DishService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -20,16 +23,20 @@ import static java.lang.Thread.sleep;
  * 获取排行一周热门的菜单
  * @author xiesj
  */
+@Service
 public class JsoupTools{
 
+    @Autowired
+    DishService dishService;
+
     public static void main(String[] args) throws IOException, InterruptedException {
-        getDish();
+        new JsoupTools().getDish();
     }
 
     /**
      * 一周前十推荐
      */
-    public static void getDish() throws IOException, InterruptedException {
+    public void getDish() throws IOException, InterruptedException {
         Document document = Jsoup.connect(GlobalConstant.WEEK_RECOMMENDED_URL).get();
         Set<String> url = new HashSet<>();
         //获取一周热门的数据
@@ -69,7 +76,7 @@ public class JsoupTools{
                         main_material.put("name",name);
                         jsonArray.add(main_material);
                     }
-                    dish.setMain_material(jsonArray);
+                    dish.setMain_material(jsonArray.toString());
                 }
                 if (material.equals("辅料")){
                     Elements main = element.getElementsByClass("recipeCategory_sub_R clear").get(0).getElementsByTag("li");
@@ -82,7 +89,7 @@ public class JsoupTools{
                         other_material.put("name",name);
                         jsonArray.add(other_material);
                     }
-                    dish.setOther_materials(jsonArray);
+                    dish.setOther_materials(jsonArray.toString());
                 }
             }
             Elements other_information = dish_details.getElementsByClass("recipeCategory_sub_R mt30 clear").get(0).getElementsByTag("li");
@@ -116,9 +123,8 @@ public class JsoupTools{
                 stepElement.add(jsonObject);
             }
             stepElement.sort(Comparator.comparing(obj ->((JSONObject)obj).getString("step")));
-            dish.setDish_describe(stepElement);
-            sleep(50000);//停留50秒
-            System.out.println(dish.toString());
+            dish.setDish_describe(stepElement.toString());
+            this.dishService.create(dish);
         }
     }
 }

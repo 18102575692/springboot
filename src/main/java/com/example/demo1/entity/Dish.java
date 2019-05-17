@@ -23,9 +23,9 @@ public class Dish implements Serializable {
     @Column(name = "image_url",columnDefinition = "varchar(200) comment '主图地址'")
     String image_url;
     @Column(name = "main_material",columnDefinition = "varchar(300) comment '主料'")
-    JSONArray main_material;
+    String main_material;
     @Column(name = "other_materials",columnDefinition = "text comment '辅料'")
-    JSONArray other_materials;
+    String other_materials;
     @Column(name = "dish_taste",columnDefinition = "varchar(10) comment '口味'")
     String dish_taste;
     @Column(name = "time_consuming",columnDefinition = "varchar(10) comment '耗时'")
@@ -35,5 +35,5 @@ public class Dish implements Serializable {
     @Column(name = "dish_technology",columnDefinition = "varchar(10) comment '工艺'")
     String dish_technology;
     @Column(name = "dish_describe",columnDefinition = "text comment '描述'")
-    JSONArray dish_describe;
+    String dish_describe;
 }

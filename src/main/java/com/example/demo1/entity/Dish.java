@@ -32,6 +32,8 @@ public class Dish implements Serializable {
     String time_consuming;
     @Column(name = "dish_difficulty",columnDefinition = "varchar(10) comment '难度'")
     String dish_difficulty;
+    @Column(name = "dish_technology",columnDefinition = "varchar(10) comment '工艺'")
+    String dish_technology;
     @Column(name = "dish_describe",columnDefinition = "text comment '描述'")
-    String dish_describe;
+    JSONArray dish_describe;
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo1.dao.mapper.DishMapper">
+    <select id="getDishList" resultType="map">
+    select * from dish;
+  </select>
+    <select id="getNewWeekDishList" resultType="java.util.Map">
+        select dish_id,dish_describe,dish_difficulty,
+        dish_name,dish_taste,dish_technology,image_url,
+        main_material,other_materials,time_consuming
+        from dish where week_time is not null
+        order by week_time desc
+        limit 0,10;
+</select>
+</mapper>

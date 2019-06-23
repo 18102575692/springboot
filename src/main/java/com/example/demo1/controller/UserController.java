@@ -2,6 +2,7 @@ package com.example.demo1.controller;
 
 import com.example.demo1.controller.form.UserForm;
 import com.example.demo1.controller.group.UserCreate;
+import com.example.demo1.dao.mapper.DishMapper;
 import com.example.demo1.entity.User;
 import com.example.demo1.service.UserService;
 import com.example.demo1.tools.*;
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -87,5 +89,11 @@ public class UserController {
         String[] file = {"http://127.0.0.1:8080/img/mc_index.jpg","http://127.0.0.1:8080/img/mc_index.jpg"};
                 qrCode.download(servletResponse,Name,file);
         return "ok";
+    }
+    @Autowired
+    DishMapper mapper;
+    @RequestMapping("/A")
+    public List<Map<String,Object>> getList(){
+        return this.mapper.getDishList();
     }
 }

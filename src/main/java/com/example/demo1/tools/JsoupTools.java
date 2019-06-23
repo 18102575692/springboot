@@ -1,6 +1,7 @@
 package com.example.demo1.tools;
 
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo1.entity.Dish;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -124,6 +126,7 @@ public class JsoupTools{
             }
             stepElement.sort(Comparator.comparing(obj ->((JSONObject)obj).getString("step")));
             dish.setDish_describe(stepElement.toString());
+            dish.setWeek_time(Integer.parseInt(DateUtil.today().replace("-","")));
             this.dishService.create(dish);
         }
     }

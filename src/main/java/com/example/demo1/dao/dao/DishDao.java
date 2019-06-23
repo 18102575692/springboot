@@ -1,11 +1,13 @@
 package com.example.demo1.dao.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo1.dao.mapper.DishMapper;
 import com.example.demo1.entity.Dish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DishDao {
@@ -56,6 +58,17 @@ public class DishDao {
      */
     public List<Dish> dishList(Dish dish){
         return this.dishMapper.select(dish);
+    }
+
+    //获取最新推荐
+    public List<Map<String,Object>> getNewWeekDishList(){
+        List<Map<String,Object>> mapList = this.dishMapper.getNewWeekDishList();
+        mapList.forEach(obj -> {
+            obj.put("main_material", JSONObject.parse(obj.get("main_material")+""));
+            obj.put("other_materials", JSONObject.parse(obj.get("other_materials")+""));
+            obj.put("dish_describe", JSONObject.parse(obj.get("dish_describe")+""));
+        });
+        return mapList;
     }
 
 }

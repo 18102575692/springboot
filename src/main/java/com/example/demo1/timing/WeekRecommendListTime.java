@@ -18,8 +18,7 @@ public class WeekRecommendListTime {
 
     @Autowired
     JsoupTools jsoupTools;
-//    @Scheduled(cron = "0 0 12 ? * WED")//每星期三 12点执行
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0 12 ? * WED")//每星期三 12点执行
     public void getDish() throws IOException, InterruptedException {
         this.jsoupTools.getDish();
     }

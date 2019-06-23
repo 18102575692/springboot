@@ -5,6 +5,9 @@ import com.example.demo1.entity.Dish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class DishService {
     @Autowired
@@ -19,4 +22,10 @@ public class DishService {
         return this.dishDao.create(dish);
     }
 
+    /**
+     * 获取最新的期的推荐列表
+     */
+    public List<Map<String,Object>> getNewWeekDishList(){
+        return this.dishDao.getNewWeekDishList();
+    }
 }

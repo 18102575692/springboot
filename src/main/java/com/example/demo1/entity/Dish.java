@@ -22,7 +22,7 @@ public class Dish implements Serializable {
     String dish_name;
     @Column(name = "image_url",columnDefinition = "varchar(200) comment '主图地址'")
     String image_url;
-    @Column(name = "main_material",columnDefinition = "varchar(300) comment '主料'")
+    @Column(name = "main_material",columnDefinition = "text comment '主料'")
     String main_material;
     @Column(name = "other_materials",columnDefinition = "text comment '辅料'")
     String other_materials;
@@ -36,4 +36,7 @@ public class Dish implements Serializable {
     String dish_technology;
     @Column(name = "dish_describe",columnDefinition = "text comment '描述'")
     String dish_describe;
+    //周期
+    @Column(name = "week_time",columnDefinition = "int(6) comment '周期（年月日）'")
+    Integer week_time;
 }

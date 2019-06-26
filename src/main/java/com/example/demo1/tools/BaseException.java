@@ -1,9 +1,10 @@
 package com.example.demo1.tools;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 /**
  * 自定义异常
  */
-
 public class BaseException extends Exception {
 
     // 表单验证异常

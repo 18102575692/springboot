@@ -130,4 +130,12 @@ public class JsoupTools{
             this.dishService.create(dish);
         }
     }
+    /**
+     * 查找菜
+     * @param name 名称
+     * @return 结果
+     */
+    public Boolean researching(String name){
+        return true;
+    }
 }

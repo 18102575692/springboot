@@ -1,9 +1,11 @@
 package com.example.demo1.controller;
 
+import cn.hutool.crypto.SmUtil;
 import com.example.demo1.controller.form.UserForm;
 import com.example.demo1.controller.group.UserCreate;
 import com.example.demo1.dao.mapper.DishMapper;
 import com.example.demo1.entity.User;
+import com.example.demo1.service.RedisService;
 import com.example.demo1.service.UserService;
 import com.example.demo1.tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,8 +23,10 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RedisService redisService;
 
-    //添加用户
+    //添加用户()
     @RequestMapping("/add")
     public ResultDto addUSer(@Validated(UserCreate.class) UserForm form) {
         Map<String, Object> map = BeanUtil.object2Map(form);
@@ -32,7 +36,7 @@ public class UserController {
         user.setUpdateTime(TimeUtil.getTime());
         user.setId(Generate.getId());
         user.setStatus(1);
-        System.out.println(user.toString());
+        user.setPassword(SmUtil.sm3(user.getPassword()));
         int result = this.userService.createUser(user);
         if (result == 1) {
             return ResultDto.ok("创建成功");
@@ -93,7 +97,16 @@ public class UserController {
     @Autowired
     DishMapper mapper;
     @RequestMapping("/A")
-    public List<Map<String,Object>> getList(){
-        return this.mapper.getDishList();
+    public String getList(HttpServletRequest request){
+        return this.redisService.get(request.getSession().getId())+"";
+    }
+
+    //登录接口
+    @RequestMapping(name="/login",method=RequestMethod.POST)
+    public ResultDto login(@RequestParam("username")String username,
+                           @RequestParam("password")String password,
+                           @RequestParam("code")String code){
+
+        return ResultDto.ok();
     }
 }

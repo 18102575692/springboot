@@ -10,7 +10,7 @@ public class WebHttpSessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("创建session");
+        System.out.println("创建session:"+se.getSession().getId());
         online++;
     }
 

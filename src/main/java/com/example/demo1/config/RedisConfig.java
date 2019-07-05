@@ -1,6 +1,6 @@
 package com.example.demo1.config;
 
-import com.example.demo1.push.RedisSub;
+import com.example.demo1.tools.push.RedisSub;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

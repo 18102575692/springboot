@@ -1,4 +1,4 @@
-package com.example.demo1.push;
+package com.example.demo1.tools.push;
 
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;

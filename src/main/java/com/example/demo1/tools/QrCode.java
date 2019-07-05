@@ -1,12 +1,12 @@
 package com.example.demo1.tools;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -40,5 +40,17 @@ public class QrCode {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    //随机数
+    public static String RandomStr(){
+        String str="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder sb=new StringBuilder(4);
+        for(int i=0;i<4;i++)
+        {
+            char ch=str.charAt(new Random().nextInt(str.length()));
+            sb.append(ch);
+        }
+        return sb.toString();
     }
 }

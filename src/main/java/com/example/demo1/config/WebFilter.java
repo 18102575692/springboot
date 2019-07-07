@@ -10,12 +10,12 @@ public class WebFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) servletResponse);
-        if (true) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            wrapper.sendRedirect("/login");
-        }
+//        HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) servletResponse);
+//        if (true) {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        } else {
+//            wrapper.sendRedirect("/login");
+//        }
     }
 
     @Override

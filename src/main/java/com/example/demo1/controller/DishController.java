@@ -5,6 +5,7 @@ import com.example.demo1.tools.BaseException;
 import com.example.demo1.tools.JsoupTools;
 import com.example.demo1.tools.ResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,20 @@ public class DishController {
            return new ResultDto(BaseException.FORM_VALIDATION_EXCEPTION,"id错误",null);
        }
         return new ResultDto(200, "success",result);
+    }
+    //搜索
+    @RequestMapping("/search")
+    public ResultDto search(@RequestParam("name")String name) throws IOException {
+        if (StringUtils.isEmpty(name)) {
+            return ResultDto.error("名称不能为空");
+        }
+        return new JsoupTools().researching(name);
+    }
+    @RequestMapping("/search_info")
+    public ResultDto searchInfo(@RequestParam("url")String url) throws IOException {
+        if (StringUtils.isEmpty(url)) {
+            return ResultDto.error("地址不能为空");
+        }
+        return new JsoupTools().dishInfo(url);
     }
 }

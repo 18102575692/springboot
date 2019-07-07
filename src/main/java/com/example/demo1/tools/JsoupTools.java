@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -32,7 +29,7 @@ public class JsoupTools{
     DishService dishService;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        new JsoupTools().getDish();
+        new JsoupTools().dishInfo("https://home.meishichina.com/recipe-35226.html");
     }
 
     /**
@@ -133,9 +130,99 @@ public class JsoupTools{
     /**
      * 查找菜
      * @param name 名称
-     * @return 结果
-     */
-    public Boolean researching(String name){
-        return true;
+     * @return 第一页的结果列表
+     * */
+    public ResultDto researching(String name) throws IOException {
+        Document document = Jsoup.connect(GlobalConstant.SearchUrl+name).get();
+        Elements elementList = document.getElementById("search_res_list").getElementsByTag("li");
+        List<Map<String,Object>> mapList = new LinkedList<>();
+        for (Element element : elementList){
+            Map<String,Object> map = new HashMap<>();
+            map.put("name",element.getElementsByTag("h4").get(0).text());
+            map.put("url",element.getElementsByTag("a").get(0).attr("href"));
+            map.put("sub_content",element.getElementsByTag("p").get(0).text());
+            mapList.add(map);
+        }
+        return ResultDto.ok(mapList);
     }
+    //详情
+    public ResultDto dishInfo(String url) throws IOException {
+        Document document = Jsoup.connect(url).get();
+        Element dish_details = document.getElementsByClass("space_left").get(0);
+        Dish dish = new Dish();
+        //设置id
+        dish.setDish_id(dish_details.getElementById("recipe_id").attr("value"));
+        //设置名称
+        dish.setDish_name(dish_details.getElementById("recipe_title").text());
+        //设置图片
+        dish.setImage_url(dish_details.getElementById("recipe_De_imgBox")
+                .getElementsByTag("a").get(0)
+                .getElementsByTag("img").attr("src"));
+        //设置主辅料
+        Elements fieldset = dish_details.getElementsByTag("fieldset");
+        for (Element element : fieldset){
+            String material = element.getElementsByTag("legend").get(0).text();
+            //判断原料
+            if (material.equals("主料")){
+                Elements main = element.getElementsByClass("recipeCategory_sub_R clear").get(0).getElementsByTag("li");
+                JSONArray jsonArray = new JSONArray();
+                for (Element element1 : main){
+                    String name = element1.getElementsByTag("b").text();
+                    String weight = element1.getElementsByClass("category_s2").text();
+                    JSONObject main_material = new JSONObject();
+                    main_material.put("weight",weight);
+                    main_material.put("name",name);
+                    jsonArray.add(main_material);
+                }
+                dish.setMain_material(jsonArray.toString());
+            }
+            if (material.equals("辅料")){
+                Elements main = element.getElementsByClass("recipeCategory_sub_R clear").get(0).getElementsByTag("li");
+                JSONArray jsonArray = new JSONArray();
+                for (Element element1 : main){
+                    String name = element1.getElementsByTag("b").text();
+                    String weight = element1.getElementsByClass("category_s2").text();
+                    JSONObject other_material = new JSONObject();
+                    other_material.put("weight",weight);
+                    other_material.put("name",name);
+                    jsonArray.add(other_material);
+                }
+                dish.setOther_materials(jsonArray.toString());
+            }
+        }
+        Elements other_information = dish_details.getElementsByClass("recipeCategory_sub_R mt30 clear").get(0).getElementsByTag("li");
+        for (Element element : other_information){
+            String information_type = element.getElementsByClass("category_s2").get(0).text();
+            //设置口味
+            if (information_type.equals("口味")){
+                dish.setDish_taste(element.getElementsByTag("a").get(0).text());
+            }
+            //设置工艺
+            if (information_type.equals("工艺")){
+                dish.setDish_technology(element.getElementsByTag("a").get(0).text());
+            }
+            //设置耗时
+            if (information_type.equals("耗时")){
+                dish.setTime_consuming(element.getElementsByTag("a").get(0).text());
+            }
+            //设置难度
+            if (information_type.equals("难度")){
+                dish.setDish_difficulty(element.getElementsByTag("a").get(0).text());
+            }
+        }
+        //设置步骤
+        Elements step = dish_details.getElementsByClass("recipeStep").get(0).getElementsByTag("li");
+        JSONArray stepElement = new JSONArray();
+        for (Element element : step){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("step",element.getElementsByClass("recipeStep_num").text());
+            jsonObject.put("details",element.getElementsByClass("recipeStep_word").text());
+            jsonObject.put("url",element.getElementsByTag("img").get(0).attr("src"));
+            stepElement.add(jsonObject);
+        }
+        stepElement.sort(Comparator.comparing(obj ->((JSONObject)obj).getString("step")));
+        dish.setDish_describe(stepElement.toString());
+        return ResultDto.ok(dish);
+    }
+
 }

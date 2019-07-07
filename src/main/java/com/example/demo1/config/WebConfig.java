@@ -20,19 +20,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new WebInterceptor())
-                .addPathPatterns("/xiesj/**");
+                .addPathPatterns("/**");
     }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    @Bean
-    public FilterRegistrationBean filterRegist() {
-        FilterRegistrationBean frBean = new FilterRegistrationBean();
-        frBean.setFilter(new WebFilter());
-        frBean.addUrlPatterns("/*");
-//        System.out.println("filter");
-        return frBean;
-    }
-
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
     public ServletListenerRegistrationBean listenerRegist() {

@@ -98,6 +98,7 @@ public class UserController {
     DishMapper mapper;
     @RequestMapping("/A")
     public String getList(HttpServletRequest request){
+        System.out.println("方法");
         return this.redisService.get(request.getSession().getId())+"";
     }
 

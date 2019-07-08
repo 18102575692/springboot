@@ -29,7 +29,7 @@ public class JsoupTools{
     DishService dishService;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        new JsoupTools().dishInfo("https://home.meishichina.com/recipe-35226.html");
+        new JsoupTools().researching("饭");
     }
 
     /**
@@ -141,7 +141,10 @@ public class JsoupTools{
             map.put("name",element.getElementsByTag("h4").get(0).text());
             map.put("url",element.getElementsByTag("a").get(0).attr("href"));
             map.put("sub_content",element.getElementsByTag("p").get(0).text());
+            map.put("image",element.getElementsByClass("pic").get(0)
+                    .getElementsByTag("img").get(0).attr("data-src"));
             mapList.add(map);
+            System.out.println(mapList);
         }
         return ResultDto.ok(mapList);
     }
